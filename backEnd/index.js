@@ -4,13 +4,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-
 import connect from "./db/config.js";
 import errorHandler from "./Errors/errorHandler.js";
 import createError from "./Errors/createError.js";
-
-
+import AuthRoute from "./routes/AuthRoutes.js";
+import UserRouter from './routes/UserRoutes.js';
 const app=express();
+dotenv.config();
 
 //midleware
 app.use(cors());
@@ -22,7 +22,10 @@ app.use("/images",express.static('images'))
 app.use(errorHandler);
 app.use(createError)
 
-dotenv.config();
+
+app.use('/auth',AuthRoute);
+app.use('/use',UserRouter);
+
 const PORT=process.env.PORT || 8080;
  const start= async()=>{
     
