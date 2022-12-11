@@ -2,42 +2,46 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+const app=express();
 
 import connect from "./db/config.js";
 import errorHandler from "./Errors/errorHandler.js";
-import createError from "./Errors/createError.js";
 import AuthRoute from "./routes/AuthRoutes.js";
 import UserRouter from './routes/UserRoutes.js';
-const app=express();
+
 dotenv.config();
 
-//midleware
+// midleware
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json({limit:"30mb",extended:true}));
 app.use(bodyParser.urlencoded({limit:"30mb",extended:true}))
-app.use(cors());
-app.use(express.static('public')) ///serve public images
-app.use("/images",express.static('images'))
+
+app.use(express.static('public')); 
+app.use('/images', express.static('images'));
+
 app.use(errorHandler);
-app.use(createError)
-
-
 app.use('/auth',AuthRoute);
-app.use('/use',UserRouter);
+app.use('/user',UserRouter);
+app.get('/test',(req,res)=>{
+    res.send("i am started sdhuioh");
+})
 
-const PORT=process.env.PORT || 8080;
- const start= async()=>{
+const port=process.env.PORT || 3001
+ const start= async ()=>{
     
      try {
-      await connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        await connect(process.env.MONGO_URL);
       console.log('connected to db');
-       
+   
      } catch (error) {
         console.error(`${error} did not connect`);
+        
      }
-     app.listen(PORT,()=>{
-        console.log(`listening at ${PORT}...`)
-    })
+    
+     app.listen(port,()=>{
+        console.log(`server starting at ${port}`);
+     })
  }
- start();
+
+start();

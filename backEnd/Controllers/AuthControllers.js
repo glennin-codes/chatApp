@@ -14,7 +14,7 @@ export const registerUser = async (req, res, next) => {
   try {
     //comparing added user with users signed up
     const oldUser = await UserModel.findOne({ username });
-    if (oldUser) return next(createError(400, '"user already exists'));
+    if (oldUser) return next(createError(400, 'user already exists'));
     //if not save user
     const user = await newUser.save();
     const token = jwt.sign(

@@ -7,16 +7,16 @@ import {
   unfollowUser,
   updateUser,
 } from "../Controllers/userControler.js";
-import authMiddleware from "../MiddleWare/AuthMiddleware.js";
+import authMiddleWare from "../MiddleWare/AuthMiddleWare.js";
 const router = express.Router();
 
 router.get("/", getAllUsers);
 router
   .route("/:id")
   .get(getUser)
-  .put(authMiddleware, updateUser)
-  .delete(authMiddleware, deleteUser);
-router.route(":id/follow").put(authMiddleware, followUser);
-router.route(":id/unfollow", authMiddleware, unfollowUser);
+  .put(authMiddleWare, updateUser)
+  .delete(authMiddleWare, deleteUser);
+router.route(":id/follow").put(authMiddleWare, followUser);
+router.route(":id/unfollow", authMiddleWare, unfollowUser);
 
 export default router;
