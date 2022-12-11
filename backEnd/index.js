@@ -8,6 +8,8 @@ import connect from "./db/config.js";
 import errorHandler from "./Errors/errorHandler.js";
 import AuthRoute from "./routes/AuthRoutes.js";
 import UserRouter from './routes/UserRoutes.js';
+import ChatRoute from './routes/ChartRoutes.js';
+import MessageRoute from "./routes/MessageRoutes.js"
 
 dotenv.config();
 
@@ -23,6 +25,9 @@ app.use('/images', express.static('images'));
 app.use(errorHandler);
 app.use('/auth',AuthRoute);
 app.use('/user',UserRouter);
+app.use('/chat', ChatRoute)
+app.use('/message',MessageRoute);
+
 app.get('/test',(req,res)=>{
     res.send("i am started sdhuioh");
 })
